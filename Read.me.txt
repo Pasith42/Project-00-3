@@ -1,0 +1,7 @@
+Process command line: C:\Program Files\Android\Android Studio\jbr\bin\java.exe =en --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.invoke=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.prefs/java.util.prefs=ALL-UNNAMED --add-opens java.prefs/java.util.prefs=ALL-UNNAMED --add-opens java.base/java.nio.charset=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED -Xmx1536M -Dfile.encoding=windows-1252 -Duser.country=US -Duser.language -Duser.variant -cp C:\Users\Surface\.gradle\wrapper\dists\gradle-7.5-all\6qsw290k5lz422uaf8jf6m7co\gradle-7.5\lib\gradle-launcher-7.5.jar org.gradle.launcher.daemon.bootstrap.GradleDaemon 7.5
+Please read the following process output to find out more:
+-----------------------
+Error: Could not find or load main class =en
+Caused by: java.lang.ClassNotFoundException: =en
+
+อาจเกิดขึ้นจากการเลือก app003 โดยไม่เลือกappThirdทำให้ไม่มีไฟล์ .idea ก็เกิดปัญหาเหล่านี้
