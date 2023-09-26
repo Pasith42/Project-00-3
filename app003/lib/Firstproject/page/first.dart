@@ -108,78 +108,40 @@ class _FirstPageState extends State<FirstPage> {
     });
   }
 
-  //แก้ปัญหาอยู่
-  Widget numberinputspinner(int number) {
-    return Container(
-      width: 60.0,
-      foregroundDecoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
-        border: Border.all(
-          color: Colors.blueGrey,
-          width: 2.0,
-        ),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Text(
-              number.toString(),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Container(
-            height: 38.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        width: 0.5,
-                      ),
-                    ),
-                  ),
-                  child: InkWell(
-                    child: const Icon(
-                      Icons.arrow_drop_up,
-                      size: 18.0,
-                    ),
-                    onTap: () {
-                      int currentValue = number;
-                      setState(() {
-                        currentValue++;
-                        number = currentValue; // incrementing value
-                        print(number);
-                      });
-                    },
-                  ),
-                ),
-                InkWell(
-                  child: const Icon(
-                    Icons.arrow_drop_down,
-                    size: 18.0,
-                  ),
-                  onTap: () {
-                    int currentValue = number;
-                    setState(() {
-                      print("Setting state");
-                      currentValue--;
-                      number = (currentValue > 0
-                          ? currentValue
-                          : 0); // decrementing value
-                      print(number);
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+  void _incrementnumberboy() {
+    setState(() {
+      _numberboy++;
+    });
+  }
+
+  void _decrementnumberboy() {
+    if (_numberboy > 0) {
+      setState(() {
+        _numberboy--;
+      });
+    } else {
+      setState(() {
+        _numberboy = 0;
+      });
+    }
+  }
+
+  void _incrementnumbergirl() {
+    setState(() {
+      _numbergirl++;
+    });
+  }
+
+  void _decrementnumbergirl() {
+    if (_numbergirl > 0) {
+      setState(() {
+        _numbergirl--;
+      });
+    } else {
+      setState(() {
+        _numbergirl = 0;
+      });
+    }
   }
 
   Widget topicName(String name, double widths, double fem, double ffem) {
@@ -447,8 +409,8 @@ class _FirstPageState extends State<FirstPage> {
                                     padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
-                                        dropdown('เลือกคำนำหน้าชื่อ',
-                                            _prefix, prefixs, fem, ffem),
+                                        dropdown('เลือกคำนำหน้าชื่อ', _prefix,
+                                            prefixs, fem, ffem),
                                         SizedBox(
                                           height: 10 * fem,
                                         ),
@@ -691,7 +653,74 @@ class _FirstPageState extends State<FirstPage> {
                                                 SizedBox(
                                                   height: 10 * fem,
                                                 ),
-                                                numberinputspinner(_numberboy),
+                                                Container(
+                                                  width: 60.0,
+                                                  foregroundDecoration:
+                                                      BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                    border: Border.all(
+                                                      color: Colors.blueGrey,
+                                                      width: 2.0,
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          '$_numberboy',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        height: 38.0,
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Container(
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                border: Border(
+                                                                  bottom:
+                                                                      BorderSide(
+                                                                    width: 0.5,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: InkWell(
+                                                                onTap:
+                                                                    _incrementnumberboy,
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .arrow_drop_up,
+                                                                  size: 18.0,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            InkWell(
+                                                              onTap:
+                                                                  _decrementnumberboy,
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .arrow_drop_down,
+                                                                size: 18.0,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                             SizedBox(
@@ -708,7 +737,74 @@ class _FirstPageState extends State<FirstPage> {
                                                 SizedBox(
                                                   height: 10 * fem,
                                                 ),
-                                                numberinputspinner(_numbergirl),
+                                                Container(
+                                                  width: 60.0,
+                                                  foregroundDecoration:
+                                                      BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                    border: Border.all(
+                                                      color: Colors.blueGrey,
+                                                      width: 2.0,
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          '$_numbergirl',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        height: 38.0,
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Container(
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                border: Border(
+                                                                  bottom:
+                                                                      BorderSide(
+                                                                    width: 0.5,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: InkWell(
+                                                                onTap:
+                                                                    _incrementnumbergirl,
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .arrow_drop_up,
+                                                                  size: 18.0,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            InkWell(
+                                                              onTap:
+                                                                  _decrementnumbergirl,
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .arrow_drop_down,
+                                                                size: 18.0,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ],
