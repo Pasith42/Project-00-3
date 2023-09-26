@@ -21,9 +21,9 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   int _currentStep = 0;
-  //ชื่อ
-  List<String> firstName = ['นาย', 'นาง'];
-  String? _firstname;
+  //คำนำหน้าชื่อ
+  List<String> prefixs = ['นาย', 'นาง'];
+  String? _prefix;
 //การศึกษาสูงสุด
   List<String> topEducation = [
     'ไม่มีการศึกษา',
@@ -62,32 +62,34 @@ class _FirstPageState extends State<FirstPage> {
     'ทาสีโรงเรียน'
   ];
   String? _selectVolunteeWork;
-
+  //สังกัดคริสตจักร
   List<String> selectChurchs = ['1', '2', '3', '4'];
   String? _selectChurch;
-
+  //สังกัดส่วน
   List<String> selectDivisions = ['1', '2', '3', '4'];
   String? _selectDivision;
-
+  //สังกัดเขต
   List<String> selectCountys = ['1', '2', '3', '4'];
   String? _selectCounty;
-
+  //สังกัดแขวง
   List<String> selectSubdistrics = ['1', '2', '3', '4'];
   String? _selectSubdistrics;
-
+  //สังกัดหน่วย
   List<String> selectUnits = ['1', '2', '3', '4'];
   String? _selectUnit;
-
+//สังกัดแคร์
   List<String> selectCares = ['1', '2', '3', '4'];
   String? _selectCare;
-
+//สังกัดฝ่ายวิญญาณ
   List<String> selectSpiritStates = ['1', '2', '3', '4'];
   String? _selectSpiritState;
-
+  //เพศ
   Gender? _gender = Gender.man;
   DateTime? _selectedDate;
+  //สถานะ
   Status? _status = Status.single;
   Education? _education = Education.graduation;
+  //จำนวนบุตร
   int _numberboy = 0;
   int _numbergirl = 0;
 
@@ -446,7 +448,7 @@ class _FirstPageState extends State<FirstPage> {
                                     child: Column(
                                       children: [
                                         dropdown('เลือกคำนำหน้าชื่อ',
-                                            _firstname, firstName, fem, ffem),
+                                            _prefix, prefixs, fem, ffem),
                                         SizedBox(
                                           height: 10 * fem,
                                         ),
