@@ -8,6 +8,8 @@ enum Gender { man, girl }
 
 enum Status { single, marry, divorce }
 
+enum Education { graduation, studying }
+
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
   @override
@@ -18,12 +20,75 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   int _currentStep = 0;
-  String _firstname = 'นาย';
+  //ชื่อ
+  List<String> firstName = ['นาย', 'นาง'];
+  String? _firstname;
+//การศึกษาสูงสุด
+  List<String> topEducation = [
+    'ไม่มีการศึกษา',
+    'ประถมศึกษา',
+    'มัธยมศึกษา',
+    'อาชีวศึกษา',
+    'ระดับปริญญาตรีหรือเทียบเท่าขึ้นไป',
+    'ระดับประกาศนียบัตรที่สูงกว่าปริญญาตรี'
+  ];
+  String? _topedution;
+//ความสามารถพิเศษ
+  List<String> talentes = [
+    'ดนตรี',
+    'กีฬา',
+    'เทคโนโลยี',
+    'เก่งคำนวณ',
+    'การศึกษา',
+    'อื่น',
+    'ไม่มี'
+  ];
+  String? _talent;
+//หัวข้อที่สนใจพิเศษ
+  List<String> selectTopicInterests = [
+    'นมัสการ',
+    'อธิษฐาน',
+    'รักษาโรค',
+    'ความเชื่อ',
+    'ความหวัง'
+  ];
+  String? _selectTopicInterest;
+//งานอาสา
+  List<String> selectVolunteeWorks = [
+    'ปลูกต้นไม้',
+    'เก็บแยกขยะ',
+    'บ้านเด็กกำพร้า',
+    'ทาสีโรงเรียน'
+  ];
+  String? _selectVolunteeWork;
+
+  List<String> selectChurchs = ['1', '2', '3', '4'];
+  String? _selectChurch;
+
+  List<String> selectDivisions = ['1', '2', '3', '4'];
+  String? _selectDivision;
+
+  List<String> selectCountys = ['1', '2', '3', '4'];
+  String? _selectCounty;
+
+  List<String> selectSubdistrics = ['1', '2', '3', '4'];
+  String? _selectSubdistrics;
+
+  List<String> selectUnits = ['1', '2', '3', '4'];
+  String? _selectUnit;
+
+  List<String> selectCares = ['1', '2', '3', '4'];
+  String? _selectCare;
+
+  List<String> selectSpiritStates = ['1', '2', '3', '4'];
+  String? _selectSpiritState;
+
   Gender? _gender = Gender.man;
   DateTime? _selectedDate;
   Status? _status = Status.single;
-  final int _numberboy = 0;
-  final int _numbergirl = 0;
+  Education? _education = Education.graduation;
+  int _numberboy = 0;
+  int _numbergirl = 0;
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -56,11 +121,11 @@ class _FirstPageState extends State<FirstPage> {
           Expanded(
             flex: 1,
             child: Text(
-              '$number',
+              number.toString(),
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(
+          Container(
             height: 38.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,35 +139,98 @@ class _FirstPageState extends State<FirstPage> {
                       ),
                     ),
                   ),
-                  child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          number += 1; // incrementing value
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.arrow_drop_up,
-                        size: 18.0,
-                      )),
-                ),
-                IconButton(
-                    onPressed: () {
+                  child: InkWell(
+                    child: const Icon(
+                      Icons.arrow_drop_up,
+                      size: 18.0,
+                    ),
+                    onTap: () {
+                      int currentValue = number;
                       setState(() {
-                        if (number > 0) {
-                          number -= 1;
-                        } else {
-                          number = 0;
-                        }
+                        currentValue++;
+                        number = currentValue; // incrementing value
+                        print(number);
                       });
                     },
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      size: 18.0,
-                    )),
+                  ),
+                ),
+                InkWell(
+                  child: const Icon(
+                    Icons.arrow_drop_down,
+                    size: 18.0,
+                  ),
+                  onTap: () {
+                    int currentValue = number;
+                    setState(() {
+                      print("Setting state");
+                      currentValue--;
+                      number = (currentValue > 0
+                          ? currentValue
+                          : 0); // decrementing value
+                      print(number);
+                    });
+                  },
+                ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget topicName(String name, double widths) {
+    return Positioned(
+      top: 0,
+      left: 15,
+      child: Container(
+        height: 30,
+        width: widths,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Center(
+          child: Text(
+            name,
+            textAlign: TextAlign.left,
+            textScaleFactor: 1.3,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget dropdown(String name, String? value1, List<String> list) {
+    return Padding(
+      padding: const EdgeInsets.all(3.0),
+      child: Container(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black38, width: 1),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: DropdownButtonFormField(
+          hint: Text(name),
+          dropdownColor: Colors.white,
+          icon: const Icon(Icons.arrow_drop_down),
+          iconSize: 20,
+          style: const TextStyle(color: Colors.black, fontSize: 15),
+          value: value1,
+          items: list.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+              ),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              value1 = value!;
+            });
+          },
+        ),
       ),
     );
   }
@@ -165,7 +293,7 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
                                       children: [
                                         TextFormField(
@@ -175,12 +303,15 @@ class _FirstPageState extends State<FirstPage> {
                                             label: const Text(
                                                 'ตั้งชื่อเข้าระบบ(username)'),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                const EdgeInsets.all(10.0),
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
                                             ),
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
                                         ),
                                         TextFormField(
                                           keyboardType:
@@ -194,6 +325,9 @@ class _FirstPageState extends State<FirstPage> {
                                                   BorderRadius.circular(20.0),
                                             ),
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
                                         ),
                                         TextFormField(
                                           keyboardType:
@@ -215,36 +349,17 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลเข้าระบบ',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            topicName('ข้อมูลเข้าระบบ', 130),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
                     SizedBox(
                       width: 400,
-                      height: 380,
+                      height: 420,
                       child: Center(
                         child: Stack(
                           children: [
@@ -252,7 +367,7 @@ class _FirstPageState extends State<FirstPage> {
                               alignment: Alignment.center,
                               child: Container(
                                 width: 400,
-                                height: 350,
+                                height: 390,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
@@ -263,26 +378,13 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
                                       children: [
-                                        DropdownButtonFormField(
-                                          value: _firstname,
-                                          items: <String>['นาย', 'นาง']
-                                              .map<DropdownMenuItem<String>>(
-                                                  (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _firstname = value!;
-                                            });
-                                          },
+                                        dropdown('เลือกคำนำหน้าชื่อ',
+                                            _firstname, firstName),
+                                        const SizedBox(
+                                          height: 10,
                                         ),
                                         TextFormField(
                                           keyboardType:
@@ -297,6 +399,9 @@ class _FirstPageState extends State<FirstPage> {
                                             ),
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
                                         TextFormField(
                                           keyboardType:
                                               TextInputType.emailAddress,
@@ -310,6 +415,9 @@ class _FirstPageState extends State<FirstPage> {
                                             ),
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
                                         TextFormField(
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
@@ -322,6 +430,9 @@ class _FirstPageState extends State<FirstPage> {
                                                   BorderRadius.circular(20.0),
                                             ),
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -368,17 +479,17 @@ class _FirstPageState extends State<FirstPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
+                                            IconButton(
+                                              onPressed: _presentDatePicker,
+                                              icon: const Icon(
+                                                  Icons.calendar_month),
+                                            ),
                                             Text(
                                               _selectedDate == null
                                                   ? 'ไม่มีข้อมูลที่เลือกวันที่'
                                                   : formatter
                                                       .formatInBuddhistCalendarThai(
                                                           _selectedDate!),
-                                            ),
-                                            IconButton(
-                                              onPressed: _presentDatePicker,
-                                              icon: const Icon(
-                                                  Icons.calendar_month),
                                             ),
                                           ],
                                         ),
@@ -388,26 +499,7 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลส่วนบุคคล',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            topicName('ข้อมูลส่วนบุคคล', 130),
                           ],
                         ),
                       ),
@@ -449,7 +541,7 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
                                       children: [
                                         const Text(
@@ -474,7 +566,7 @@ class _FirstPageState extends State<FirstPage> {
                                             ),
                                             const Text('โสด'),
                                             const SizedBox(
-                                              width: 10,
+                                              width: 5,
                                             ),
                                             Radio<Status>(
                                               value: Status.marry,
@@ -489,7 +581,7 @@ class _FirstPageState extends State<FirstPage> {
                                               'แต่งงานแล้ว',
                                             ),
                                             const SizedBox(
-                                              width: 10,
+                                              width: 5,
                                             ),
                                             Radio<Status>(
                                               value: Status.divorce,
@@ -501,12 +593,12 @@ class _FirstPageState extends State<FirstPage> {
                                               },
                                             ),
                                             const Text(
-                                              'หย่าร้างแล้ว',
+                                              'หย่าร้าง',
                                             ),
                                           ],
                                         ),
                                         const SizedBox(
-                                          height: 10,
+                                          height: 5,
                                         ),
                                         Row(
                                           children: [
@@ -581,32 +673,13 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลส่วนบุคคล',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            topicName('ข้อมูลส่วนบุคคล', 130),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
                     SizedBox(
                       width: 400,
@@ -718,26 +791,7 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลการติดต่อ',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            topicName('ข้อมูลการติดต่อ', 130),
                           ],
                         ),
                       ),
@@ -763,12 +817,9 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
                                       children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
@@ -893,26 +944,7 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลที่อยู่',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            topicName('ข้อมูลที่อยู่', 100),
                           ],
                         ),
                       ),
@@ -952,43 +984,126 @@ class _FirstPageState extends State<FirstPage> {
                                     width: 3,
                                   ),
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
-                                      children: [],
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Radio<Education>(
+                                              value: Education.graduation,
+                                              groupValue: _education,
+                                              onChanged: (Education? value) {
+                                                setState(() {
+                                                  _education = value;
+                                                });
+                                              },
+                                            ),
+                                            const Text('สำเร็จการศึกษา'),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Radio<Education>(
+                                              value: Education.studying,
+                                              groupValue: _education,
+                                              onChanged: (Education? value) {
+                                                setState(() {
+                                                  _education = value;
+                                                });
+                                              },
+                                            ),
+                                            const Text(
+                                              'กำลังการศึกษา',
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown('เลือกระดับการศึกษาสูงสุด',
+                                            _topedution, topEducation),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        TextFormField(
+                                          //maxLength: 50,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                            label: const Text(
+                                                'ชื่อสถาบันการศึกษา'),
+                                            contentPadding:
+                                                const EdgeInsets.all(8.0),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty
+                                                //||
+                                                //value.trim().length <= 1 ||
+                                                //value.trim().length > 50
+                                                ) {
+                                              return 'ขอกรุณาพิมพ์มากกว่า 1 คำ และไม่เกิน 50 คำ';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (value) {
+                                            () {};
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        TextFormField(
+                                          //maxLength: 50,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                            label: const Text(
+                                                'คณะ/ภาควิชา/แผนกวิชา'),
+                                            contentPadding:
+                                                const EdgeInsets.all(8.0),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty
+                                                //||
+                                                //value.trim().length <= 1 ||
+                                                //value.trim().length > 50
+                                                ) {
+                                              return 'ขอกรุณาพิมพ์มากกว่า 1 คำ และไม่เกิน 50 คำ';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (value) {
+                                            () {};
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลการติดต่อ',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            topicName('ข้อมูลการศึกษา', 130),
                           ],
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     SizedBox(
                       width: 400,
-                      height: 300,
+                      height: 430,
                       child: Center(
                         child: Stack(
                           children: [
@@ -996,7 +1111,7 @@ class _FirstPageState extends State<FirstPage> {
                               alignment: Alignment.center,
                               child: Container(
                                 width: 400,
-                                height: 270,
+                                height: 400,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
@@ -1005,35 +1120,133 @@ class _FirstPageState extends State<FirstPage> {
                                     width: 3,
                                   ),
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
-                                      children: [],
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormField(
+                                          //maxLength: 50,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                            label: const Text('ประกอบอาชีพ'),
+                                            contentPadding:
+                                                const EdgeInsets.all(8.0),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty
+                                                //||
+                                                //value.trim().length <= 1 ||
+                                                //value.trim().length > 50
+                                                ) {
+                                              return 'ขอกรุณาพิมพ์มากกว่า 1 คำ และไม่เกิน 50 คำ';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (value) {
+                                            () {};
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        TextFormField(
+                                          //maxLength: 50,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                            label: const Text(
+                                                'จังหวัดหรือพื้นที่เขตที่ทำงานอยู่ปัจจุบัน'),
+                                            contentPadding:
+                                                const EdgeInsets.all(8.0),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty
+                                                //||
+                                                //value.trim().length <= 1 ||
+                                                //value.trim().length > 50
+                                                ) {
+                                              return 'ขอกรุณาพิมพ์มากกว่า 1 คำ และไม่เกิน 50 คำ';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (value) {
+                                            () {};
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown(
+                                            'เลือกประเภทหัวข้อความสามารถพิเศษ',
+                                            _talent,
+                                            talentes),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        TextFormField(
+                                          //maxLength: 50,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                            label: const Text(
+                                                'รายละเอียดของความสามารถพิเศษ'),
+                                            contentPadding:
+                                                const EdgeInsets.all(8.0),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty
+                                                //||
+                                                //value.trim().length <= 1 ||
+                                                //value.trim().length > 50
+                                                ) {
+                                              return 'ขอกรุณาพิมพ์มากกว่า 1 คำ และไม่เกิน 50 คำ';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (value) {
+                                            () {};
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown(
+                                            'เลือกประเภทหัวข้อที่สนใจพิเศษ',
+                                            _selectTopicInterest,
+                                            selectTopicInterests),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown(
+                                            'เลือกประเภทหัวข้องานอาสาที่สนใจ',
+                                            _selectVolunteeWork,
+                                            selectVolunteeWorks)
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลที่อยู่',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
+                            topicName(
+                              'ข้อมูลอาชีพและความถนัด',
+                              210,
                             ),
                           ],
                         ),
@@ -1057,7 +1270,7 @@ class _FirstPageState extends State<FirstPage> {
                   children: [
                     SizedBox(
                       width: 400,
-                      height: 300,
+                      height: 510,
                       child: Center(
                         child: Stack(
                           children: [
@@ -1065,7 +1278,7 @@ class _FirstPageState extends State<FirstPage> {
                               alignment: Alignment.center,
                               child: Container(
                                 width: 400,
-                                height: 270,
+                                height: 480,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
@@ -1074,36 +1287,59 @@ class _FirstPageState extends State<FirstPage> {
                                     width: 3,
                                   ),
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
-                                      children: [],
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        dropdown(
+                                            'เลือกสังกัดคริสตจักรสถานนมัสการ',
+                                            _selectChurch,
+                                            selectChurchs),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown('เลือกสังกัดส่วน',
+                                            _selectDivision, selectDivisions),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown('เลือกสังกัดส่วนเขต',
+                                            _selectCounty, selectCountys),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown(
+                                            'เลือกสังกัดแขวง',
+                                            _selectSubdistrics,
+                                            selectSubdistrics),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown('เลือกสังกัดหน่วย',
+                                            _selectUnit, selectUnits),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown('เลือกสังกัดแคร์', _selectCare,
+                                            selectCares),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        dropdown(
+                                            'เลือกสถานะภาพฝ่ายวิญญาณ',
+                                            _selectSpiritState,
+                                            selectSpiritStates),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 0,
-                              left: 15,
-                              child: Container(
-                                height: 30,
-                                width: 130,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'ข้อมูลการติดต่อ',
-                                    textAlign: TextAlign.left,
-                                    textScaleFactor: 1.3,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            topicName('สังกัดและสถานะภาพฝ่ายวิญญาณ', 290)
                           ],
                         ),
                       ),
