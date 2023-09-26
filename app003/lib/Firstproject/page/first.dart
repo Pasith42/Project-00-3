@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:buddhist_datetime_dateformat_sns/buddhist_datetime_dateformat_sns.dart';
+import 'package:app003/Firstproject/utils.dart';
 
 final formatter = DateFormat.yMMMMEEEEd();
 
@@ -179,12 +180,12 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 
-  Widget topicName(String name, double widths) {
+  Widget topicName(String name, double widths, double fem, double ffem) {
     return Positioned(
-      top: 0,
-      left: 15,
+      top: 0 * fem,
+      left: 15 * fem,
       child: Container(
-        height: 30,
+        height: 30 * fem,
         width: widths,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -192,30 +193,42 @@ class _FirstPageState extends State<FirstPage> {
         child: Center(
           child: Text(
             name,
-            textAlign: TextAlign.left,
-            textScaleFactor: 1.3,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+            style: safeGoogleFont(
+              'Sarabun',
+              fontSize: 20 * ffem,
+              fontWeight: FontWeight.w400,
+              height: 1.3 * ffem / fem,
+              color: Colors.black,
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget dropdown(String name, String? value1, List<String> list) {
+  Widget dropdown(
+      String name, String? value1, List<String> list, double fem, double ffem) {
     return Padding(
-      padding: const EdgeInsets.all(3.0),
+      padding: EdgeInsets.all(3.0 * fem),
       child: Container(
-        padding: const EdgeInsets.only(left: 10, right: 10),
+        padding: EdgeInsets.only(left: 10 * fem, right: 10 * fem),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black38, width: 1),
-          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.black38, width: 1 * fem),
+          borderRadius: BorderRadius.circular(20 * fem),
         ),
         child: DropdownButtonFormField(
           hint: Text(name),
           dropdownColor: Colors.white,
           icon: const Icon(Icons.arrow_drop_down),
-          iconSize: 20,
-          style: const TextStyle(color: Colors.black, fontSize: 15),
+          iconSize: 20 * fem,
+          style: safeGoogleFont(
+            'Sarabun',
+            fontSize: 15 * ffem,
+            fontWeight: FontWeight.w400,
+            height: 1.3 * ffem / fem,
+            color: Colors.black,
+          ),
           value: value1,
           items: list.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
@@ -235,8 +248,29 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 
+  Widget textSafeGoogleFont(
+      String name, double size, Color colors, double fem, double ffem) {
+    return Text(
+      name,
+      textAlign: TextAlign.center,
+      style: safeGoogleFont(
+        'Sarabun',
+        fontSize: size * ffem,
+        fontWeight: FontWeight.w400,
+        height: 1.3 * ffem / fem,
+        color: colors,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 411.43;
+    var wd = MediaQuery.of(context).size.width;
+    var w = wd.toStringAsFixed(2);
+    var fem = MediaQuery.of(context).size.width / baseWidth;
+    var ffem = fem * 0.97;
+
     return Scaffold(
       body: Form(
         child: Stepper(
@@ -249,97 +283,127 @@ class _FirstPageState extends State<FirstPage> {
               _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
           steps: [
             Step(
-              title: const Text(
-                'หน้า 1',
-                textAlign: TextAlign.left,
-                textScaleFactor: 1.0,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              title:
+                  textSafeGoogleFont('หน้าหนึ่ง', 12, Colors.black, fem, ffem),
               content: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const Text(
-                      'สมัครสมาชิก',
-                      textAlign: TextAlign.left,
-                      textScaleFactor: 3,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const Text(
-                      'Hope Application',
-                      textAlign: TextAlign.left,
-                      textScaleFactor: 1,
-                    ),
-                    const SizedBox(
-                      height: 20,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'สมัครสมาชิก',
+                          textAlign: TextAlign.left,
+                          style: safeGoogleFont(
+                            'Sarabun',
+                            fontSize: 30 * ffem,
+                            fontWeight: FontWeight.w400,
+                            height: 1.3 * ffem / fem,
+                            letterSpacing: 0.64 * fem,
+                            color: const Color(0xff5b585b),
+                          ),
+                        ),
+                        Text(
+                          'Hope Application',
+                          textAlign: TextAlign.left,
+                          style: safeGoogleFont(
+                            'Sarabun',
+                            fontSize: 20 * ffem,
+                            fontWeight: FontWeight.w400,
+                            height: 1.3 * ffem / fem,
+                            letterSpacing: 0.44 * fem,
+                            color: const Color(0xff5b585b),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 250,
+                      height: 20 * fem,
+                    ),
+                    SizedBox(
+                      width: 400 * fem,
+                      height: 250 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 220,
+                                width: 400 * fem,
+                                height: 220 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30 * fem),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
                                         TextFormField(
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text(
-                                                'ตั้งชื่อเข้าระบบ(username)'),
+                                            label: textSafeGoogleFont(
+                                                'ตั้งชื่อเข้าระบบ(username)',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(10.0),
+                                                EdgeInsets.all(10.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('อีเมล(Email)'),
+                                            label: textSafeGoogleFont(
+                                                'อีเมล(Email)',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text(
-                                                'กำหนดรหัสผ่านเข้าระบบ(Password)'),
+                                            label: textSafeGoogleFont(
+                                                'กำหนดรหัสผ่านเข้าระบบ(Password)',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                         ),
@@ -349,90 +413,99 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            topicName('ข้อมูลเข้าระบบ', 130),
+                            topicName('ข้อมูลเข้าระบบ', 130, fem, ffem),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
+                    SizedBox(
+                      height: 5 * fem,
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 420,
+                      width: 400 * fem,
+                      height: 420 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 390,
+                                width: 400 * fem,
+                                height: 390 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30 * fem),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
                                         dropdown('เลือกคำนำหน้าชื่อ',
-                                            _firstname, firstName),
-                                        const SizedBox(
-                                          height: 10,
+                                            _firstname, firstName, fem, ffem),
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('ชื่อ'),
+                                            label: textSafeGoogleFont('ชื่อ',
+                                                16, Colors.black54, fem, ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('นามสกุล'),
+                                            label: textSafeGoogleFont('นามสกุล',
+                                                16, Colors.black54, fem, ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
-                                            label:
-                                                const Text('เลขที่บัตรประชาชน'),
+                                            label: textSafeGoogleFont(
+                                                'เลขที่บัตรประชาชน',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -447,14 +520,10 @@ class _FirstPageState extends State<FirstPage> {
                                                 });
                                               },
                                             ),
-                                            const Text(
-                                              'เพศชาย',
-                                              style: TextStyle(
-                                                fontSize: 18.0,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
+                                            textSafeGoogleFont('เพศชาย', 14,
+                                                Colors.black87, fem, ffem),
+                                            SizedBox(
+                                              width: 20 * fem,
                                             ),
                                             Radio<Gender>(
                                               value: Gender.girl,
@@ -465,12 +534,8 @@ class _FirstPageState extends State<FirstPage> {
                                                 });
                                               },
                                             ),
-                                            const Text(
-                                              'เพศหญิง',
-                                              style: TextStyle(
-                                                fontSize: 18.0,
-                                              ),
-                                            ),
+                                            textSafeGoogleFont('เพศหญิง', 14,
+                                                Colors.black87, fem, ffem),
                                           ],
                                         ),
                                         Row(
@@ -490,6 +555,14 @@ class _FirstPageState extends State<FirstPage> {
                                                   : formatter
                                                       .formatInBuddhistCalendarThai(
                                                           _selectedDate!),
+                                              textAlign: TextAlign.center,
+                                              style: safeGoogleFont(
+                                                'Sarabun',
+                                                fontSize: 16 * ffem,
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.3 * ffem / fem,
+                                                color: Colors.black87,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -499,10 +572,14 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            topicName('ข้อมูลส่วนบุคคล', 130),
+                            topicName('ข้อมูลส่วนบุคคล', 130, fem, ffem),
                           ],
                         ),
                       ),
+                    ),
+                    Text(
+                      'Width : $w',
+                      textScaleFactor: 1.5,
                     ),
                   ],
                 ),
@@ -511,45 +588,38 @@ class _FirstPageState extends State<FirstPage> {
               isActive: _currentStep == 0,
             ),
             Step(
-              title: const Text(
-                'หน้าสอง',
-                textAlign: TextAlign.left,
-                textScaleFactor: 1.0,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              title: textSafeGoogleFont('หน้าสอง', 12, Colors.black, fem, ffem),
               content: SingleChildScrollView(
                 child: Column(
                   children: [
                     SizedBox(
-                      width: 400,
-                      height: 300,
+                      width: 400 * fem,
+                      height: 300 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 270,
+                                width: 400 * fem,
+                                height: 270 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30 * fem),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
-                                        const Text(
-                                          'สถานะภาพ',
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
+                                        textSafeGoogleFont('สถานะภาพ', 14,
+                                            Colors.black87, fem, ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -564,7 +634,8 @@ class _FirstPageState extends State<FirstPage> {
                                                 });
                                               },
                                             ),
-                                            const Text('โสด'),
+                                            textSafeGoogleFont('โสด', 14,
+                                                Colors.black87, fem, ffem),
                                             const SizedBox(
                                               width: 5,
                                             ),
@@ -577,9 +648,8 @@ class _FirstPageState extends State<FirstPage> {
                                                 });
                                               },
                                             ),
-                                            const Text(
-                                              'แต่งงานแล้ว',
-                                            ),
+                                            textSafeGoogleFont('สมรส', 14,
+                                                Colors.black87, fem, ffem),
                                             const SizedBox(
                                               width: 5,
                                             ),
@@ -592,18 +662,17 @@ class _FirstPageState extends State<FirstPage> {
                                                 });
                                               },
                                             ),
-                                            const Text(
-                                              'หย่าร้าง',
-                                            ),
+                                            textSafeGoogleFont('หย่าร้าง', 14,
+                                                Colors.black87, fem, ffem),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         Row(
                                           children: [
-                                            const SizedBox(
-                                              width: 40,
+                                            SizedBox(
+                                              width: 40 * fem,
                                             ),
                                             Column(
                                               mainAxisAlignment:
@@ -611,47 +680,57 @@ class _FirstPageState extends State<FirstPage> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                const Text(
-                                                  'จำนวนบุตรชาย',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
+                                                textSafeGoogleFont(
+                                                    'จำนวนบุตรชาย',
+                                                    14,
+                                                    Colors.black87,
+                                                    fem,
+                                                    ffem),
+                                                SizedBox(
+                                                  height: 10 * fem,
                                                 ),
                                                 numberinputspinner(_numberboy),
                                               ],
                                             ),
-                                            const SizedBox(
-                                              width: 60,
+                                            SizedBox(
+                                              width: 60 * fem,
                                             ),
                                             Column(
                                               children: [
-                                                const Text(
-                                                  'จำนวนบุตรหญิง',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
+                                                textSafeGoogleFont(
+                                                    'จำนวนบุตรหญิง',
+                                                    14,
+                                                    Colors.black87,
+                                                    fem,
+                                                    ffem),
+                                                SizedBox(
+                                                  height: 10 * fem,
                                                 ),
                                                 numberinputspinner(_numbergirl),
                                               ],
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           maxLength: 20,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('พิมพ์ชื่อเล่น'),
+                                            label: textSafeGoogleFont(
+                                                'พิมพ์ชื่อเล่น',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -673,46 +752,52 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            topicName('ข้อมูลส่วนบุคคล', 130),
+                            topicName('ข้อมูลส่วนบุคคล', 130, fem, ffem),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
+                    SizedBox(
+                      height: 5 * fem,
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 310,
+                      width: 400 * fem,
+                      height: 310 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 280,
+                                width: 400 * fem,
+                                height: 280 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30 * fem),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
                                         TextFormField(
                                           decoration: InputDecoration(
-                                            labelText: 'เบอร์โทรติดต่อ',
+                                            label: textSafeGoogleFont(
+                                                'เบอร์โทรที่ติดต่อ',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           keyboardType: TextInputType.phone,
@@ -727,20 +812,26 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 20,
+                                        SizedBox(
+                                          height: 20 * fem,
                                         ),
                                         TextFormField(
                                           maxLength: 20,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('ไลน์ไอดี'),
+                                            label: textSafeGoogleFont(
+                                                'ไลน์ไอดี',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -756,20 +847,22 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 20,
+                                        SizedBox(
+                                          height: 20 * fem,
                                         ),
                                         TextFormField(
                                           maxLength: 20,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('เฟสบุ๊ค'),
+                                            label: textSafeGoogleFont('เฟสบุ๊ค',
+                                                16, Colors.black54, fem, ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -791,33 +884,33 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            topicName('ข้อมูลการติดต่อ', 130),
+                            topicName('ข้อมูลการติดต่อ', 130, fem, ffem),
                           ],
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 300,
+                      width: 400 * fem,
+                      height: 300 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 270,
+                                width: 400 * fem,
+                                height: 270 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
                                         TextFormField(
@@ -825,13 +918,18 @@ class _FirstPageState extends State<FirstPage> {
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label:
-                                                const Text('ที่อยู่บ้านเลขที่'),
+                                            label: textSafeGoogleFont(
+                                                'ที่อยู่บ้านเลขที่',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -848,20 +946,26 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('เลือกจังหวัด'),
+                                            label: textSafeGoogleFont(
+                                                'เลือกจังหวัด',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -878,20 +982,26 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('เลือกตำบล/แขวง'),
+                                            label: textSafeGoogleFont(
+                                                'เลือกตำบล/แขวง',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -908,20 +1018,26 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('เลือกอำเภอ/เขต'),
+                                            label: textSafeGoogleFont(
+                                                'เลือกอำเภอ/เขต',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -944,7 +1060,7 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            topicName('ข้อมูลที่อยู่', 100),
+                            topicName('ข้อมูลที่อยู่', 100, fem, ffem),
                           ],
                         ),
                       ),
@@ -956,37 +1072,32 @@ class _FirstPageState extends State<FirstPage> {
               isActive: _currentStep == 1,
             ),
             Step(
-              title: const Text(
-                'หน้าสาม',
-                textAlign: TextAlign.left,
-                textScaleFactor: 1.0,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              title: textSafeGoogleFont('หน้าสาม', 12, Colors.black, fem, ffem),
               content: SingleChildScrollView(
                 child: Column(
                   children: [
                     SizedBox(
-                      width: 400,
-                      height: 300,
+                      width: 400 * fem,
+                      height: 300 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 270,
+                                width: 400 * fem,
+                                height: 270 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30 * fem),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
                                         Row(
@@ -1002,9 +1113,14 @@ class _FirstPageState extends State<FirstPage> {
                                                 });
                                               },
                                             ),
-                                            const Text('สำเร็จการศึกษา'),
-                                            const SizedBox(
-                                              width: 10,
+                                            textSafeGoogleFont(
+                                                'สำเร็จการศึกษาแล้ว',
+                                                14,
+                                                Colors.black87,
+                                                fem,
+                                                ffem),
+                                            SizedBox(
+                                              width: 10 * fem,
                                             ),
                                             Radio<Education>(
                                               value: Education.studying,
@@ -1015,31 +1131,39 @@ class _FirstPageState extends State<FirstPage> {
                                                 });
                                               },
                                             ),
-                                            const Text(
-                                              'กำลังการศึกษา',
-                                            ),
+                                            textSafeGoogleFont('กำลังศึกษา', 14,
+                                                Colors.black87, fem, ffem),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
-                                        dropdown('เลือกระดับการศึกษาสูงสุด',
-                                            _topedution, topEducation),
-                                        const SizedBox(
-                                          height: 5,
+                                        dropdown(
+                                            'เลือกระดับการศึกษาสูงสุด',
+                                            _topedution,
+                                            topEducation,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text(
-                                                'ชื่อสถาบันการศึกษา'),
+                                            label: textSafeGoogleFont(
+                                                'ชื่อสถาบันการศึกษา',
+                                                14,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -1056,21 +1180,26 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text(
-                                                'คณะ/ภาควิชา/แผนกวิชา'),
+                                            label: textSafeGoogleFont(
+                                                'คณะ/ภาควิชา/แผนกวิชา',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -1093,52 +1222,58 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                               ),
                             ),
-                            topicName('ข้อมูลการศึกษา', 130),
+                            topicName('ข้อมูลการศึกษา', 130, fem, ffem),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
+                    SizedBox(
+                      height: 5 * fem,
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 430,
+                      width: 400 * fem,
+                      height: 430 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 400,
+                                width: 400 * fem,
+                                height: 400 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30 * fem),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text('ประกอบอาชีพ'),
+                                            label: textSafeGoogleFont(
+                                                'ประกอบอาชีพ',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -1155,21 +1290,26 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text(
-                                                'จังหวัดหรือพื้นที่เขตที่ทำงานอยู่ปัจจุบัน'),
+                                            label: textSafeGoogleFont(
+                                                'จังหวัดหรือพื้นที่เขตที่ทำงานอยู่ปัจจุบัน',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -1186,28 +1326,35 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         dropdown(
                                             'เลือกประเภทหัวข้อความสามารถพิเศษ',
                                             _talent,
-                                            talentes),
-                                        const SizedBox(
-                                          height: 5,
+                                            talentes,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         TextFormField(
                                           //maxLength: 50,
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           decoration: InputDecoration(
-                                            label: const Text(
-                                                'รายละเอียดของความสามารถพิเศษ'),
+                                            label: textSafeGoogleFont(
+                                                'รายละเอียดของความสามารถพิเศษ',
+                                                16,
+                                                Colors.black54,
+                                                fem,
+                                                ffem),
                                             contentPadding:
-                                                const EdgeInsets.all(8.0),
+                                                EdgeInsets.all(8.0 * fem),
                                             border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                                  BorderRadius.circular(
+                                                      20.0 * fem),
                                             ),
                                           ),
                                           validator: (value) {
@@ -1224,30 +1371,31 @@ class _FirstPageState extends State<FirstPage> {
                                             () {};
                                           },
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         dropdown(
                                             'เลือกประเภทหัวข้อที่สนใจพิเศษ',
                                             _selectTopicInterest,
-                                            selectTopicInterests),
-                                        const SizedBox(
-                                          height: 5,
+                                            selectTopicInterests,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         dropdown(
                                             'เลือกประเภทหัวข้องานอาสาที่สนใจ',
                                             _selectVolunteeWork,
-                                            selectVolunteeWorks)
+                                            selectVolunteeWorks,
+                                            fem,
+                                            ffem)
                                       ],
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            topicName(
-                              'ข้อมูลอาชีพและความถนัด',
-                              210,
-                            ),
+                            topicName('ข้อมูลอาชีพและความถนัด', 210, fem, ffem),
                           ],
                         ),
                       ),
@@ -1259,87 +1407,101 @@ class _FirstPageState extends State<FirstPage> {
               isActive: _currentStep == 2,
             ),
             Step(
-              title: const Text(
-                'หน้าสี่',
-                textAlign: TextAlign.left,
-                textScaleFactor: 1.0,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              title: textSafeGoogleFont('หน้าสี่', 12, Colors.black, fem, ffem),
               content: SingleChildScrollView(
                 child: Column(
                   children: [
                     SizedBox(
-                      width: 400,
-                      height: 510,
+                      width: 400 * fem,
+                      height: 510 * fem,
                       child: Center(
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.center,
                               child: Container(
-                                width: 400,
-                                height: 480,
+                                width: 400 * fem,
+                                height: 480 * fem,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30 * fem),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 3,
+                                    width: 3 * fem,
                                   ),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(20.0 * fem),
                                     child: Column(
                                       children: [
-                                        const SizedBox(
-                                          height: 10,
+                                        SizedBox(
+                                          height: 10 * fem,
                                         ),
                                         dropdown(
                                             'เลือกสังกัดคริสตจักรสถานนมัสการ',
                                             _selectChurch,
-                                            selectChurchs),
-                                        const SizedBox(
-                                          height: 5,
+                                            selectChurchs,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
-                                        dropdown('เลือกสังกัดส่วน',
-                                            _selectDivision, selectDivisions),
-                                        const SizedBox(
-                                          height: 5,
+                                        dropdown(
+                                            'เลือกสังกัดส่วน',
+                                            _selectDivision,
+                                            selectDivisions,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
-                                        dropdown('เลือกสังกัดส่วนเขต',
-                                            _selectCounty, selectCountys),
-                                        const SizedBox(
-                                          height: 5,
+                                        dropdown(
+                                            'เลือกสังกัดส่วนเขต',
+                                            _selectCounty,
+                                            selectCountys,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         dropdown(
                                             'เลือกสังกัดแขวง',
                                             _selectSubdistrics,
-                                            selectSubdistrics),
-                                        const SizedBox(
-                                          height: 5,
+                                            selectSubdistrics,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
-                                        dropdown('เลือกสังกัดหน่วย',
-                                            _selectUnit, selectUnits),
-                                        const SizedBox(
-                                          height: 5,
+                                        dropdown(
+                                            'เลือกสังกัดหน่วย',
+                                            _selectUnit,
+                                            selectUnits,
+                                            fem,
+                                            ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         dropdown('เลือกสังกัดแคร์', _selectCare,
-                                            selectCares),
-                                        const SizedBox(
-                                          height: 5,
+                                            selectCares, fem, ffem),
+                                        SizedBox(
+                                          height: 5 * fem,
                                         ),
                                         dropdown(
                                             'เลือกสถานะภาพฝ่ายวิญญาณ',
                                             _selectSpiritState,
-                                            selectSpiritStates),
+                                            selectSpiritStates,
+                                            fem,
+                                            ffem),
                                       ],
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            topicName('สังกัดและสถานะภาพฝ่ายวิญญาณ', 290)
+                            topicName(
+                                'สังกัดและสถานะภาพฝ่ายวิญญาณ', 290, fem, ffem)
                           ],
                         ),
                       ),
